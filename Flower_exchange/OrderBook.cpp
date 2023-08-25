@@ -61,25 +61,25 @@ bool OrderBook::isBuyEmpty()
 	return buyHeap.empty();
 }
 
-double OrderBook::getBuyMinVal()
+double OrderBook::getBuyMaxVal()
 {
 	//get the price of the top vector in the buyHeap
 	return stod(buyHeap.top()[3]);
 }
 
-std::vector<std::string> OrderBook::getBuyMinVec()
+std::vector<std::string> OrderBook::getBuyMaxVec()
 {	
 	//get a copy of top vector in the buyHeap without popping it
 	return buyHeap.top();
 }
 
-void OrderBook::popBuyMinVec()
+void OrderBook::popBuyMaxVec()
 {
 	//pop the top vector in the buyHeap
 	buyHeap.pop();
 }
 
-void OrderBook::updateBuyMinVec(const std::vector<std::string>& order)
+void OrderBook::updateBuyMaxVec(const std::vector<std::string>& order)
 {	
 //update the top vector in the buyHeap by popping it
 	buyHeap.pop();

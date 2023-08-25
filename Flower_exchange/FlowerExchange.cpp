@@ -27,7 +27,7 @@ int main() {
         orderBook.writeBuy(field);
     }
 
-    orderBook.updateBuyMinVec({ "aaa4", "Rose", "2", "50.00", "10" });
+    orderBook.updateBuyMaxVec({ "aaa4", "Rose", "2", "50.00", "10" });
 
     /*while(orderBook.isSellEmpty() == false)
 	{
@@ -37,9 +37,9 @@ int main() {
 
     while (orderBook.isBuyEmpty() == false)
     {
-        orderBook.updateBuyMinVec({ "aaa4", "Rose", "2", "50.00", "10" });
-        std::cout << orderBook.getBuyMinVec()[4] << std::endl;
-        orderBook.popBuyMinVec();
+        orderBook.updateBuyMaxVec({ "aaa4", "Rose", "2", "50.00", "10" });
+        std::cout << orderBook.getBuyMaxVec()[4] << std::endl;
+        orderBook.popBuyMaxVec();
     }
 
     // Read the Order CSV file one line at a time and store the fields in a vector

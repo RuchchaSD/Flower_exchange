@@ -71,10 +71,10 @@ public:
 
     //BUY
     bool isBuyEmpty();
-    double getBuyMinVal();
-    std::vector<std::string> getBuyMinVec();
-    void popBuyMinVec();
-    void updateBuyMinVec(const std::vector<std::string>& order);
+    double getBuyMaxVal();
+    std::vector<std::string> getBuyMaxVec();
+    void popBuyMaxVec();
+    void updateBuyMaxVec(const std::vector<std::string>& order);
     void writeBuy(const std::vector<std::string>& order);
 
     std::string getInstrument();
