@@ -4,41 +4,80 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include "BuyMaxHeap.h" //remove
+#include "SellMinHeap.h" //remove
+#include <queue>
+#include <vector>
+
+struct CompareSell {
+    bool operator()(const std::vector<std::string>& a, const std::vector<std::string>& b) {
+        double priceA = std::stod(a[3]);
+        double priceB = std::stod(b[3]);
+
+        if (priceA == priceB) {
+            // Consider time priority logic
+            // For example: Compare based on the Client Order ID or other timestamp
+            return a[0] > b[0]; // Higher Client Order ID has higher priority
+        }
+
+        return priceA > priceB; // Smaller price has higher priority
+    }
+};
+
+struct CompareBuy {
+    bool operator()(const std::vector<std::string>& a, const std::vector<std::string>& b) {
+        double priceA = std::stod(a[3]);
+        double priceB = std::stod(b[3]);
+
+        if (priceA == priceB) {
+            // Consider time priority logic
+            // For example: Compare based on the Client Order ID or other timestamp
+            return a[0] > b[0]; // Higher Client Order ID has higher priority
+        }
+
+        return priceA < priceB; // Larger price has higher priority
+    }
+};
+
+
+
+
 
 class OrderBook {
 private:
     // Add private variables
     std::string Instrument;
+    std::priority_queue<std::vector<std::string>, std::vector<std::vector<std::string>>, CompareBuy> buyHeap;
+    std::priority_queue<std::vector<std::string>, std::vector<std::vector<std::string>>, CompareSell> sellHeap;
+
     //std::vector<std::string> rejectedOrderIDs; 
 
     // Add private functions
-    void recordOrder(const std::vector<std::string>& order, int status, int quantity);
-    void updateOrder(const std::vector<std::string>& order, int quantity);
 
 public:
     // add public functions and variables
     OrderBook(std::string Instrument);
     ~OrderBook();
 
-    void CommonFunction(const std::vector<std::string>& order);
 
     //SELL
-    bool SellIsEmpty();
-    double SellGetMinVal();
-    std::vector<std::string> SellGetMinVec();
-    void SellVecMinPop();
-    void SellVecMinUpdate(const std::vector<std::string>& order);
-    void SellWrite(const std::vector<std::string>& order);
+    bool isSellEmpty(); 
+    double getSellMinVal();
+    std::vector<std::string> getSellMinVec();
+    void popSellMinVec();
+    void updateSellMinVec(const std::vector<std::string>& order);
+    void writeSell(const std::vector<std::string>& order);
 
     //BUY
-    bool BuyIsEmpty();
-    double BuyGetMinVal();
-    std::vector<std::string> BuyGetMinVec();
-    void BuyVecMinPop();
-    void BuyVecMinUpdate(const std::vector<std::string>& order);
-    void BuyWrite(const std::vector<std::string>& order);
+    bool isBuyEmpty();
+    double getBuyMinVal();
+    std::vector<std::string> getBuyMinVec();
+    void popBuyMinVec();
+    void updateBuyMinVec(const std::vector<std::string>& order);
+    void writeBuy(const std::vector<std::string>& order);
 
-
+    std::string getInstrument();
 };
 
 #endif // ORDER_VALIDATOR_H

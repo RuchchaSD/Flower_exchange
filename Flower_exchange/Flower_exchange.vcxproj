@@ -127,19 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BuyMaxHeap.cpp" />
     <ClCompile Include="ExecutionReportCSVWriter.cpp" />
     <ClCompile Include="FlowerExchange.cpp" />
     <ClCompile Include="OrderBook.cpp" />
     <ClCompile Include="OrderCSVReader.cpp" />
     <ClCompile Include="OrderProcessor.cpp" />
     <ClCompile Include="OrderValidator.cpp" />
+    <ClCompile Include="SellMinHeap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuyMaxHeap.h" />
     <ClInclude Include="ExecutionReportCSVWriter.h" />
     <ClInclude Include="OrderBook.h" />
     <ClInclude Include="OrderCSVReader.h" />
     <ClInclude Include="OrderProcessor.h" />
     <ClInclude Include="OrderValidator.h" />
+    <ClInclude Include="SellMinHeap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Execution_rep.csv" />

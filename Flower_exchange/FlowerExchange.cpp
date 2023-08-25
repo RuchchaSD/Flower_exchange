@@ -2,6 +2,7 @@
 #include "OrderCSVReader.h"
 #include "ExecutionReportCSVWriter.h"
 #include "OrderValidator.h"
+#include "OrderBook.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -10,8 +11,36 @@ int main() {
     OrderCSVReader reader("data/order.csv");
     ExecutionReportCSVWriter writer("data/Execution_rep.csv");
     OrderValidator validator(writer);
+    OrderBook orderBook("rose");
 
 
+    //pass some valid sell and buy orders to the order book to check it's functionality
+    std::vector<std::string> fields1 = { "aaa1", "Rose", "2", "55.00", "100" };
+    std::vector<std::vector<std::string>> testfields = { 
+                                        { "aaa3", "Rose", "2", "50.00", "100" },
+                                        { "aaa1", "Rose", "2", "10.00", "100" },
+                                        { "aaa2", "Rose", "2", "40.00", "100" },
+                                        { "aaa4", "Rose", "2", "90.00", "100" } };
+    
+    for (auto field : testfields) {
+        orderBook.writeSell(field);
+        orderBook.writeBuy(field);
+    }
+
+    orderBook.updateBuyMinVec({ "aaa4", "Rose", "2", "50.00", "10" });
+
+    /*while(orderBook.isSellEmpty() == false)
+	{
+		std::cout << orderBook.getSellMinVec()[0] << std::endl;
+		orderBook.popSellMinVec();
+	}*/
+
+    while (orderBook.isBuyEmpty() == false)
+    {
+        orderBook.updateBuyMinVec({ "aaa4", "Rose", "2", "50.00", "10" });
+        std::cout << orderBook.getBuyMinVec()[4] << std::endl;
+        orderBook.popBuyMinVec();
+    }
 
     // Read the Order CSV file one line at a time and store the fields in a vector
     //std::vector<std::string> orderLine;
