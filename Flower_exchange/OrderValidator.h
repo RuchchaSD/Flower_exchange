@@ -20,6 +20,7 @@ public:
     ~OrderValidator();
 
     bool validateOrder(const std::vector<std::string>& order);
+    int newValidator(const std::vector<std::string>& order);
     void getRejectedOrderIDs(std::vector<std::string>& orderIDs);
     void getRejectedOrders(std::vector<std::string>& orders);
 };

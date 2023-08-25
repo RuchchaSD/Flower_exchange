@@ -39,23 +39,23 @@ int main() {
 	//}
 
    //pass some order vectors to OrderValidator to check it's functionality
-    std::vector<std::vector<std::string>> testfields = { { "aaa1", "Rose", "2", "55.00", "100" },
-                                            { "aaa2", "Rose", "2", "45.00", "100" },
+ //   std::vector<std::vector<std::string>> testfields = { { "aaa1", "Rose", "2", "55.00", "100" },
+ //                                           { "aaa2", "Rose", "2", "45.00", "100" },
 
-        //wrong ones
-                                            { "aaa3", "Rose", "2", "55.00", "100","23" },
-                                            { "aaa4", "Rose", "2", "45.00" },
-                                            { "aaa5", "Roses", "2", "55.00", "100" },
-                                            { "aaa6", "Rose", "22", "45.00", "100" },
-                                            { "aaa7", "Rose", "2", "-55.00", "100" },
-                                            { "aaa8", "Rose", "2", "45.00", "103" },
-                                            { "aaa9", "Rose", "2", "45.00", "1020" } };
-    cout << "Order ID : Validity" << endl;
-    for (auto field : testfields)
-    {
-		cout<< field[0]<< " : "  << bool(validator.validateOrder(field)) << endl;
-        //cout << field[0] << " : " << field[1] << endl;
-	}
+ //       //wrong ones
+ //                                           { "aaa3", "Rose", "2", "55.00", "100","23" },
+ //                                           { "aaa4", "Rose", "2", "45.00" },
+ //                                           { "aaa5", "Roses", "2", "55.00", "100" },
+ //                                           { "aaa6", "Rose", "22", "45.00", "100" },
+ //                                           { "aaa7", "Rose", "2", "-55.00", "100" },
+ //                                           { "aaa8", "Rose", "2", "45.00", "103" },
+ //                                           { "aaa9", "Rose", "2", "45.00", "1020" } };
+ //   cout << "Order ID : Validity" << endl;
+ //   for (auto field : testfields)
+ //   {
+	//	cout<< field[0]<< " : "  << bool(validator.validateOrder(field)) << endl;
+ //       //cout << field[0] << " : " << field[1] << endl;
+	//}
     //cout << testfields[0][0] << " : " << validator.validateOrder(testfields[3]) << endl;
 
     return 0;

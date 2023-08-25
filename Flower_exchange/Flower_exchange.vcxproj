@@ -129,12 +129,16 @@
   <ItemGroup>
     <ClCompile Include="ExecutionReportCSVWriter.cpp" />
     <ClCompile Include="FlowerExchange.cpp" />
+    <ClCompile Include="OrderBook.cpp" />
     <ClCompile Include="OrderCSVReader.cpp" />
+    <ClCompile Include="OrderProcessor.cpp" />
     <ClCompile Include="OrderValidator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ExecutionReportCSVWriter.h" />
+    <ClInclude Include="OrderBook.h" />
     <ClInclude Include="OrderCSVReader.h" />
+    <ClInclude Include="OrderProcessor.h" />
     <ClInclude Include="OrderValidator.h" />
   </ItemGroup>
   <ItemGroup>

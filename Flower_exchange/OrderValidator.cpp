@@ -36,6 +36,47 @@ bool OrderValidator::validateOrder(const std::vector<std::string>& order) {
 	
 }
 
+int OrderValidator::newValidator(const std::vector<std::string>& order) {
+    std::string reason = "";
+    // check for required fields
+    if (order.size() != 5) {
+        reason = "Invalid number of fields";
+    }else if (order[2] != "1" && order[2] != "2") {// check for invalid side
+    		reason = "Invalid side";
+    	}
+	else if (stod(order[3]) <= 0) {// check for price greater than 0
+    		reason = "Price must be greater than 0";
+    	}
+	else if (stoi(order[4]) % 10 != 0) {// check for quantity multiple of 10
+    		reason = "Quantity must be a multiple of 10";
+    	}
+	else if (stoi(order[4]) < 10 || stoi(order[4]) > 1000) {// check for quantity in range
+    		reason = "Quantity must be in the range 10 to 1000";
+    	}
+    else {
+        if (order[1] == "Rose") {
+			return 1;
+		}
+        else if (order[1] == "Lavender") {
+			return 2;
+		}
+        else if (order[1] == "Lotus") {
+            return 3;
+		}
+        else if (order[1] == "Tulip") {
+            return 4;
+		}
+        else if (order[1] == "Orchid") {
+            return 5;
+		}
+        else {
+		    reason = "Invalid instrument";
+		}
+	}
+    recordRejectedOrder(order, reason);
+    return 0;
+}
+
 void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, const std::string& reason) {
     // create a string conatining the current date and time in YYYYMMDD-HHMMSS.sss format
     //std::string currentDateTime = "20230820-132823.154";
