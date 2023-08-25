@@ -5,12 +5,16 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <ctime>
+#include <chrono>
 
 class ExecutionReportCSVWriter {
 private:
     std::string filename;
     std::ofstream file;
     std::vector<std::string> orderIDs;
+
+    std::string getDateTime();
 
 public:
     ExecutionReportCSVWriter(const std::string& filename);
