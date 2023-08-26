@@ -3,6 +3,7 @@
 #include "ExecutionReportCSVWriter.h"
 #include "OrderValidator.h"
 #include "OrderBook.h"
+#include "OrderProcessor.h"
 //#include "OrderDivider.h"
 #include <iostream>
 #include <vector>
@@ -10,10 +11,13 @@
 
 
 int main() {
-    OrderCSVReader reader("data/order.csv"); // ok
+    //OrderCSVReader reader("data/order.csv"); // ok
     ExecutionReportCSVWriter writer("data/Execution_rep.csv"); // ok
-    OrderValidator validator(writer);// ok
-    OrderBook orderBook("rose");//ok
+    //OrderValidator validator(writer);// ok
+    //OrderBook orderBook("rose");//ok
+    //OrderProcessor processor("rose", writer);//ok
+    
+
     //OrderDivider orderDivider(writer);
 
 
@@ -25,6 +29,27 @@ int main() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+    //Give Valid orders to order processor and check if it is working
+    //implement a vector that have orders and pass it to the order processor
+    //std::vector<std::vector<std::string>> testfields = {
+				//						{ "ord1","aaa1", "Rose", "1", "50.00", "100" },
+				//						{ "ord2","aaa2", "Rose", "1", "40.00", "100" },
+				//						{ "ord3","aaa3", "Rose", "1", "30.00", "100" },
+				//						{ "ord4","aaa4", "Rose", "2", "30.00", "150" },
+				//						{ "ord5","aaa5", "Rose", "2", "35.00", "50" } };
+    //for (auto field : testfields) {
+    //    processor.ProcessOrder(field);
+    //}
     ////pass some valid sell and buy orders to the order book to check it's functionality
     //std::vector<std::string> fields1 = { "aaa1", "Rose", "2", "55.00", "100" };
     //std::vector<std::vector<std::string>> testfields = { 

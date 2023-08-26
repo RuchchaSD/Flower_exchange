@@ -1,18 +1,1 @@
 Order_ID,Client_Order_ID,Instrument,Side,Price,Quantity,Status,Reason,Timestamp
-ord1,aaa21,Rose,2,100,55.00,0,_,20230826113613.456
-ord2,aaa12,Rose,2,100,45.00,0,_,20230826113615.153ord22,aaa3,Rose,2,55.00,100 23 ,1,Invalid number of fields,20230826121934.994
-ord23,aaa4,Rose,2,45.00,,1,Invalid number of fields,20230826121934.996
-ord24,aaa5,Roses,2,55.00,100,1,Invalid instrument,20230826121934.996
-ord25,aaa6,Rose,22,45.00,100,1,Invalid side,20230826121934.997
-ord26,aaa7,Rose,2,-55.00,100,1,Price must be greater than 0,20230826121934.998
-ord27,aaa8,Rose,2,45.00,103,1,Quantity must be a multiple of 10,20230826121934.998
-ord28,aaa9,Rose,2,45.00,1020,1,Quantity must be in the range 10 to 1000,20230826121934.998
-ord22,aaa3,Rose,2,55.00,100 23 ,1,Invalid number of fields,20230826122106.322
-ord23,aaa4,Rose,2,45.00,,1,Invalid number of fields,20230826122116.032
-ord22,aaa3,Rose,2,55.00,100 23 ,1,Invalid number of fields,20230826122304.799
-ord23,aaa4,Rose,2,45.00,,1,Invalid number of fields,20230826122304.821
-ord24,aaa5,Roses,2,55.00,100,1,Invalid instrument,20230826122304.822
-ord25,aaa6,Rose,22,45.00,100,1,Invalid side,20230826122304.822
-ord26,aaa7,Rose,2,-55.00,100,1,Price must be greater than 0,20230826122304.822
-ord27,aaa8,Rose,2,45.00,103,1,Quantity must be a multiple of 10,20230826122304.823
-ord28,aaa9,Rose,2,45.00,1020,1,Quantity must be in the range 10 to 1000,20230826122304.823
