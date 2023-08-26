@@ -10,7 +10,7 @@ class OrderValidator {
 private:
     ExecutionReportCSVWriter& writer;
     std::vector<std::string> rejectedOrderIDs;
-    std::vector<std::string> rejectedOrders = {"er00"};
+    //std::vector<std::string> rejectedOrders = {"er00"};
     
     void incrementrejectedOrders(std::string& orderID);
     void recordRejectedOrder(const std::vector<std::string>& order, const std::string& reason);
