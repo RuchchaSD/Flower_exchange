@@ -12,13 +12,15 @@
 
 struct CompareSell {
     bool operator()(const std::vector<std::string>& a, const std::vector<std::string>& b) {
-        double priceA = std::stod(a[3]);
-        double priceB = std::stod(b[3]);
+        double priceA = std::stod(a[4]);
+        double priceB = std::stod(b[4]);
 
         if (priceA == priceB) {
             // Consider time priority logic
             // For example: Compare based on the Client Order ID or other timestamp
-            return a[0] > b[0]; // Higher Client Order ID has higher priority
+
+
+            return std::stoi(a[0].substr(3)) > std::stoi(b[0].substr(3)); // Lower Client Order ID has higher priority
         }
 
         return priceA > priceB; // Smaller price has higher priority
@@ -27,13 +29,13 @@ struct CompareSell {
 
 struct CompareBuy {
     bool operator()(const std::vector<std::string>& a, const std::vector<std::string>& b) {
-        double priceA = std::stod(a[3]);
-        double priceB = std::stod(b[3]);
+        double priceA = std::stod(a[4]);
+        double priceB = std::stod(b[4]);
 
         if (priceA == priceB) {
             // Consider time priority logic
             // For example: Compare based on the Client Order ID or other timestamp
-            return a[0] > b[0]; // Higher Client Order ID has higher priority
+            return std::stoi(a[0].substr(3)) > std::stoi(b[0].substr(3)); // Lower Client Order ID has higher priority
         }
 
         return priceA < priceB; // Larger price has higher priority

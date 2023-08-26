@@ -24,7 +24,7 @@ bool OrderBook::isSellEmpty()
 double OrderBook::getSellMinVal()
 {
 //get the price of the top vector in the sellHeap
-	return stod(sellHeap.top()[3]);
+	return stod(sellHeap.top()[4]);
 }
 
 std::vector<std::string> OrderBook::getSellMinVec()
@@ -64,7 +64,7 @@ bool OrderBook::isBuyEmpty()
 double OrderBook::getBuyMaxVal()
 {
 	//get the price of the top vector in the buyHeap
-	return stod(buyHeap.top()[3]);
+	return stod(buyHeap.top()[4]);
 }
 
 std::vector<std::string> OrderBook::getBuyMaxVec()
