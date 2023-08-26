@@ -43,21 +43,22 @@ int main() {
  //   }
 
      //Read the Order CSV file one line at a time and store the fields in a vector
-    std::vector<std::string> orderLine;
-    while (reader.getNextOrderLine(orderLine)) {
-        for (const auto& field : orderLine) {
-            std::cout << field << " ";
-        }
-        std::cout << std::endl;
-        // pass the order line to a function that processes the order
-    }
+    //std::vector<std::string> orderLine;
+    //while (reader.getNextOrderLine(orderLine)) {
+    //    for (const auto& field : orderLine) {
+    //        std::cout << field << " ";
+    //    }
+    //    std::cout << std::endl;
+    //    // pass the order line to a function that processes the order
+    //}
 
 
     //Write lines to the Execution Report CSV file
-    //std::vector<std::string> fields1 = { "aaa21","ord1", "Rose", "2", "55.00", "100", "0", "_", "" };
-    //std::vector<std::string> fields2 = { "aaa12","ord2", "Rose", "2", "45.00", "100", "0", "_", ""};
-    //writer.writeExecutionRecord(fields1);
-    //writer.writeExecutionRecord(fields2);
+    /*std::vector<std::string> fields1 = { "ord1", "aaa21", "Rose", "2", "100", "55.00", "0", "_", ""};
+    std::vector<std::string> fields2 = { "ord2", "aaa12", "Rose", "2", "100", "45.00", "0", "_", ""};
+    std::vector<std::string> fields3 = { "ord3", "aaa13", "Rose", "2", "100", "45.00", "0", "_", "" };
+    writer.writeExecutionRecord(fields1);
+    writer.writeExecutionRecord(fields2);*/
 
 
 

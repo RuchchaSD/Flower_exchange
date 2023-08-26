@@ -54,6 +54,7 @@ ExecutionReportCSVWriter::~ExecutionReportCSVWriter() {
 }
 
 void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::string>& fields) {
+    // expected order of the vector is:ordId, cliId, side,price,qty,status,Reason,"" or timestamp
     if (!file.is_open()) {
         std::cerr << "File is not open for writing: " << filename << std::endl;
         return;
@@ -67,11 +68,15 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
         }
     }
 
+    
+
     if (fields[fields.size() - 1] == "") {
-		file << getDateTime();
+        //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
+        file << getDateTime();
 	}
     else {
-		file << fields[fields.size() - 1];
+        //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
+        file << fields[fields.size() - 1];
 	}
 
     file << std::endl;
