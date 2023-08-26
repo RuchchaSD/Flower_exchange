@@ -39,6 +39,9 @@
     <ClCompile Include="SellMinHeap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OrderDivider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OrderCSVReader.h">
@@ -62,12 +65,18 @@
     <ClInclude Include="SellMinHeap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OrderDivider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Execution_rep.csv">
       <Filter>Source Files</Filter>
     </None>
     <None Include="data\order.csv">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="data\orders.csv">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

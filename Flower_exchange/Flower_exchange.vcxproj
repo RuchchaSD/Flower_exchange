@@ -132,6 +132,7 @@
     <ClCompile Include="FlowerExchange.cpp" />
     <ClCompile Include="OrderBook.cpp" />
     <ClCompile Include="OrderCSVReader.cpp" />
+    <ClCompile Include="OrderDivider.cpp" />
     <ClCompile Include="OrderProcessor.cpp" />
     <ClCompile Include="OrderValidator.cpp" />
     <ClCompile Include="SellMinHeap.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="ExecutionReportCSVWriter.h" />
     <ClInclude Include="OrderBook.h" />
     <ClInclude Include="OrderCSVReader.h" />
+    <ClInclude Include="OrderDivider.h" />
     <ClInclude Include="OrderProcessor.h" />
     <ClInclude Include="OrderValidator.h" />
     <ClInclude Include="SellMinHeap.h" />
@@ -148,6 +150,7 @@
   <ItemGroup>
     <None Include="data\Execution_rep.csv" />
     <None Include="data\order.csv" />
+    <None Include="data\orders.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

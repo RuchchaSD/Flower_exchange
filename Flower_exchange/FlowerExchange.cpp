@@ -4,41 +4,88 @@
 #include "OrderValidator.h"
 #include "OrderBook.h"
 #include "OrderProcessor.h"
-//#include "OrderDivider.h"
+#include "OrderDivider.h"
 #include <iostream>
 #include <vector>
 #include <string>
+//include libraries for measuring time
+#include <ctime>
+#include <chrono>
+
 
 
 int main() {
-    //OrderCSVReader reader("data/order.csv"); // ok
+    //add code to measure time at the start of the program
+    auto start = std::chrono::system_clock::now();
+
+    OrderCSVReader reader("data/order.csv"); // ok
     ExecutionReportCSVWriter writer("data/Execution_rep.csv"); // ok
     OrderValidator validator(writer);// ok
     //OrderBook orderBook("rose");//ok
-    //OrderProcessor processor("rose", writer);//ok
-    
+    OrderProcessor roseOrderprocessor("Rose", writer);//ok
+    OrderProcessor lavenderOrderprocessor("Lavender", writer);//ok
+    OrderProcessor lotusOrderprocessor("Lotus", writer);//ok
+    OrderProcessor tulipOrderprocessor("Tulip", writer);//ok
+    OrderProcessor orchidOrderprocessor("Orchid", writer);//ok
+    //OrderDivider orderDivider(writer);//not implemented yet
 
-    //OrderDivider orderDivider(writer);
+    std::vector<std::vector<std::string>> roseOrders;
+    std::vector<std::vector<std::string>> lavenderOrders;
+    std::vector<std::vector<std::string>> lotusOrders;
+    std::vector<std::vector<std::string>> tulipOrders;
+    std::vector<std::vector<std::string>> orchidOrders;
 
+    //read orders one line at a time and pass it to the validator
+    std::vector<std::string> orderLine;
+    while (reader.getNextOrderLine(orderLine)) {
+        int status = validator.newValidator(orderLine);
+        if (status == 0) {
+            std::cout << orderLine[1] <<": Order is rejected" << std::endl;
+			continue;
+		}
+		else {
+			//std::cout << "Order is accepted" << std::endl;
+			//orderDivider.divideOrder(orderLine);
+            if (status ==1 ) {
+				roseOrders.push_back(orderLine);
+			}
+            else if (status == 2 ) {
+				lavenderOrders.push_back(orderLine);
+			}
+            else if (status == 3) {
+				lotusOrders.push_back(orderLine);
+			}
+            else if (status == 4) {
+				tulipOrders.push_back(orderLine);
+			}
+            else if (status == 5) {
+				orchidOrders.push_back(orderLine);
+			}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if (!roseOrders.empty()) {
+				roseOrderprocessor.ProcessOrder(roseOrders.front());
+                roseOrders.erase(roseOrders.begin());
+			}
+            else if (!lavenderOrders.empty()) {
+                lavenderOrderprocessor.ProcessOrder(lavenderOrders.front());
+				lavenderOrders.erase(lavenderOrders.begin());
+            }else if (!lotusOrders.empty()) {
+				lotusOrderprocessor.ProcessOrder(lotusOrders.front());
+                lotusOrders.erase(lotusOrders.begin());
+            }else if (!tulipOrders.empty()) {
+                tulipOrderprocessor.ProcessOrder(tulipOrders.front());
+                tulipOrders.erase(tulipOrders.begin());
+            }
+            else if (!orchidOrders.empty()) {
+				orchidOrderprocessor.ProcessOrder(orchidOrders.front());
+                orchidOrders.erase(orchidOrders.begin());
+			}
+        }
+	}
+    //add code to measure time at the end of the program
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::cout << "Time taken to process all orders: " << elapsed_seconds.count() << "s\n";
     //Give Valid orders to order processor and check if it is working
     //implement a vector that have orders and pass it to the order processor
     //std::vector<std::vector<std::string>> testfields = {
@@ -51,7 +98,7 @@ int main() {
     //    processor.ProcessOrder(field);
     //}
     // 
-    // 
+    // ---------------------------------------------------
     ////pass some valid sell and buy orders to the order book to check it's functionality
     //std::vector<std::string> fields1 = { "aaa1", "Rose", "2", "55.00", "100" };
     //std::vector<std::vector<std::string>> testfields = { 
@@ -84,6 +131,7 @@ int main() {
     //    std::cout << orderBook.getBuyMaxVec()[0] << std::endl;
     //    orderBook.popBuyMaxVec();
     //}
+    // ---------------------------------------------------
      //Read the Order CSV file one line at a time and store the fields in a vector
     //std::vector<std::string> orderLine;
     //while (reader.getNextOrderLine(orderLine)) {
@@ -105,22 +153,22 @@ int main() {
 	//	std::cout << id << std::endl;
 	//}
    //pass some order vectors to OrderValidator to check it's functionality
-    std::vector<std::vector<std::string>> testfields = { { "ord20","aaa1", "Rose", "2", "55.00", "100"},
-                                            { "ord21","aaa2", "Lotus", "2", "45.00", "100" },
-       //wrong ones
-                                            { "ord22","aaa3", "Rose", "2", "55.00", "100","23" },
-                                            { "ord23","aaa4", "Rose", "2", "45.00" },
-                                            { "ord24","aaa5", "Roses", "2", "55.00", "100" },
-                                            { "ord25","aaa6", "Rose", "22", "45.00", "100" },
-                                            { "ord26","aaa7", "Rose", "2", "-55.00", "100" },
-                                            { "ord27","aaa8", "Rose", "2", "45.00", "103" },
-                                            { "ord28","aaa9", "Rose", "2", "45.00", "1020" } };
- //   cout << "Order ID : Validity" << endl;
-    for (auto field : testfields)
-    {
-		cout<< field[0]<< " : "  << to_string(validator.newValidator(field)) << endl;
-        //cout << field[0] << " : " << field[1] << endl;
-	}
+ //   std::vector<std::vector<std::string>> testfields = { { "ord20","aaa1", "Rose", "2", "55.00", "100"},
+ //                                           { "ord21","aaa2", "Lotus", "2", "45.00", "100" },
+ //      //wrong ones
+ //                                           { "ord22","aaa3", "Rose", "2", "55.00", "100","23" },
+ //                                           { "ord23","aaa4", "Rose", "2", "45.00" },
+ //                                           { "ord24","aaa5", "Roses", "2", "55.00", "100" },
+ //                                           { "ord25","aaa6", "Rose", "22", "45.00", "100" },
+ //                                           { "ord26","aaa7", "Rose", "2", "-55.00", "100" },
+ //                                           { "ord27","aaa8", "Rose", "2", "45.00", "103" },
+ //                                           { "ord28","aaa9", "Rose", "2", "45.00", "1020" } };
+ ////   cout << "Order ID : Validity" << endl;
+ //   for (auto field : testfields)
+ //   {
+	//	cout<< field[0]<< " : "  << to_string(validator.newValidator(field)) << endl;
+ //       //cout << field[0] << " : " << field[1] << endl;
+	//}
     //cout << testfields[0][0] << " : " << validator.validateOrder(testfields[3]) << endl;
 
     return 0;
