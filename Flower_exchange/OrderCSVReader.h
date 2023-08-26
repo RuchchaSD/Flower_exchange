@@ -11,9 +11,10 @@ class OrderCSVReader {
 private:
     string filename;
     ifstream file;
+    int orderId;
 
 public:
-    OrderCSVReader(const std::string& filename);
+    OrderCSVReader(const std::string& filename, int orderId = 0);
     ~OrderCSVReader();
 
     bool getNextOrderLine(std::vector<std::string>& orderLine);

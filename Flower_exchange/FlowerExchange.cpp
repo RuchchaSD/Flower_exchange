@@ -42,15 +42,15 @@ int main() {
  //       orderBook.popBuyMaxVec();
  //   }
 
-    // Read the Order CSV file one line at a time and store the fields in a vector
-    //std::vector<std::string> orderLine;
-    //while (reader.getNextOrderLine(orderLine)) {
-    //    for (const auto& field : orderLine) {
-    //        std::cout << field << " ";
-    //    }
-    //    std::cout << std::endl;
-    //    // pass the order line to a function that processes the order
-    //}
+     //Read the Order CSV file one line at a time and store the fields in a vector
+    std::vector<std::string> orderLine;
+    while (reader.getNextOrderLine(orderLine)) {
+        for (const auto& field : orderLine) {
+            std::cout << field << " ";
+        }
+        std::cout << std::endl;
+        // pass the order line to a function that processes the order
+    }
 
 
     //Write lines to the Execution Report CSV file

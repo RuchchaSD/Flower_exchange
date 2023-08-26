@@ -5,7 +5,8 @@
 
 using namespace std;
 
-OrderCSVReader::OrderCSVReader(const std::string& filename) : filename(filename) {
+OrderCSVReader::OrderCSVReader(const std::string& filename, int orderId ) : filename(filename) {
+    this->orderId = orderId;
     file.open(filename);
     if (!file.is_open()) {
         cerr << "Failed to open file: " << filename << endl;
@@ -31,6 +32,7 @@ bool OrderCSVReader::getNextOrderLine(std::vector<std::string>& orderLine) {
             stringstream ss(line);
             string field;
             orderLine.clear();
+            orderLine.push_back("ord" + to_string(++orderId));
             while (getline(ss, field, ',')) {
                 orderLine.push_back(field);
             }
