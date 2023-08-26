@@ -18,6 +18,7 @@ private:
     // Add private functions
     void recordOrder(const std::vector<std::string>& order, int status, std::string quantity, double price);
     void updateOrder(std::vector<std::string>& order, int quantity);
+    std::string getDateTime();
 
 public:
     // add public functions and variables

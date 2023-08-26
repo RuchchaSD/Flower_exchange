@@ -13,7 +13,7 @@
 int main() {
     //OrderCSVReader reader("data/order.csv"); // ok
     ExecutionReportCSVWriter writer("data/Execution_rep.csv"); // ok
-    //OrderValidator validator(writer);// ok
+    OrderValidator validator(writer);// ok
     //OrderBook orderBook("rose");//ok
     //OrderProcessor processor("rose", writer);//ok
     
@@ -50,6 +50,8 @@ int main() {
     //for (auto field : testfields) {
     //    processor.ProcessOrder(field);
     //}
+    // 
+    // 
     ////pass some valid sell and buy orders to the order book to check it's functionality
     //std::vector<std::string> fields1 = { "aaa1", "Rose", "2", "55.00", "100" };
     //std::vector<std::vector<std::string>> testfields = { 
@@ -103,22 +105,22 @@ int main() {
 	//	std::cout << id << std::endl;
 	//}
    //pass some order vectors to OrderValidator to check it's functionality
- //   std::vector<std::vector<std::string>> testfields = { { "ord20","aaa1", "Rose", "2", "55.00", "100"},
- //                                           { "ord21","aaa2", "Lotus", "2", "45.00", "100" },
+    std::vector<std::vector<std::string>> testfields = { { "ord20","aaa1", "Rose", "2", "55.00", "100"},
+                                            { "ord21","aaa2", "Lotus", "2", "45.00", "100" },
        //wrong ones
- //                                           { "ord22","aaa3", "Rose", "2", "55.00", "100","23" },
- //                                           { "ord23","aaa4", "Rose", "2", "45.00" },
- //                                           { "ord24","aaa5", "Roses", "2", "55.00", "100" },
- //                                           { "ord25","aaa6", "Rose", "22", "45.00", "100" },
- //                                           { "ord26","aaa7", "Rose", "2", "-55.00", "100" },
- //                                           { "ord27","aaa8", "Rose", "2", "45.00", "103" },
- //                                           { "ord28","aaa9", "Rose", "2", "45.00", "1020" } };
- ////   cout << "Order ID : Validity" << endl;
- //   for (auto field : testfields)
- //   {
-	//	cout<< field[0]<< " : "  << to_string(validator.newValidator(field)) << endl;
- //       //cout << field[0] << " : " << field[1] << endl;
-	//}
+                                            { "ord22","aaa3", "Rose", "2", "55.00", "100","23" },
+                                            { "ord23","aaa4", "Rose", "2", "45.00" },
+                                            { "ord24","aaa5", "Roses", "2", "55.00", "100" },
+                                            { "ord25","aaa6", "Rose", "22", "45.00", "100" },
+                                            { "ord26","aaa7", "Rose", "2", "-55.00", "100" },
+                                            { "ord27","aaa8", "Rose", "2", "45.00", "103" },
+                                            { "ord28","aaa9", "Rose", "2", "45.00", "1020" } };
+ //   cout << "Order ID : Validity" << endl;
+    for (auto field : testfields)
+    {
+		cout<< field[0]<< " : "  << to_string(validator.newValidator(field)) << endl;
+        //cout << field[0] << " : " << field[1] << endl;
+	}
     //cout << testfields[0][0] << " : " << validator.validateOrder(testfields[3]) << endl;
 
     return 0;

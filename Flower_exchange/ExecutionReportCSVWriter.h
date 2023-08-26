@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <ctime>
 #include <chrono>
 

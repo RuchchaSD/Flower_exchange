@@ -11,7 +11,7 @@ OrderProcessor::~OrderProcessor()
 void OrderProcessor::recordOrder(const std::vector<std::string>& order, int status, std::string quantity, double price)
 {
 	//print vec + status + quantity + price
-	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",""};
+	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",getDateTime()};
 	//OrderId, C_Id, Instrument, Side, Price,  Quantity,  Status,Reason, TimeStamp
 
 	// Write order details to execution report writer
@@ -24,6 +24,8 @@ void OrderProcessor::updateOrder(std::vector<std::string>& order, int quantity)
 	order[5] = std::to_string(quantity);
 	//return order;
 }
+
+
 
 
 void OrderProcessor::ProcessOrder(const std::vector<std::string>& ord)
@@ -121,4 +123,29 @@ void OrderProcessor::ProcessOrder(const std::vector<std::string>& ord)
 			}
 		}
 	}
+}
+
+
+std::string OrderProcessor::getDateTime()
+{
+	auto now = std::chrono::system_clock::now();
+	auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+	auto epoch = now_ms.time_since_epoch();
+
+	std::time_t now_c = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+
+	std::tm time_info;
+#ifdef _WIN32
+	localtime_s(&time_info, &now_c); // Use localtime_s on Windows
+#else
+	localtime_r(&now_c, &time_info); // Use localtime_r on non-Windows systems
+#endif
+
+	char buffer[80];
+	std::strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", &time_info);
+
+	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(epoch) % 1000;
+	sprintf_s(buffer, "%s.%03lld", buffer, ms.count());
+
+	return buffer;
 }

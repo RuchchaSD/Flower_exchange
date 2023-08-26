@@ -1,8 +1,5 @@
 #include "OrderValidator.h"
-#include <iostream>
-//include libraries to get the current date and time
-#include <ctime>
-#include <chrono>
+
 
 OrderValidator::OrderValidator(ExecutionReportCSVWriter& writer) : writer(writer) {
     // ...
@@ -84,7 +81,7 @@ void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, 
     std::vector<std::string> rejectedOrder;
     //incrementrejectedOrders(OrderID);
     if (order.size() == 6) {
-        rejectedOrder = { order[0],order[1],order[2],order[3],order[4],order[5],"1",reason,"" };
+        rejectedOrder = { order[0],order[1],order[2],order[3],order[4],order[5],"1",reason,getDateTime()};
     }
     else{
         if (order.size() < 6){
@@ -96,7 +93,7 @@ void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, 
             }
             rejectedOrder.push_back("1");
             rejectedOrder.push_back(reason);
-            rejectedOrder.push_back("");
+            rejectedOrder.push_back(getDateTime());
         }else{
             for (int i = 0; i < 5; i++) {
                 rejectedOrder.push_back(order[i]);
@@ -108,7 +105,7 @@ void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, 
             rejectedOrder.push_back(txt);
             rejectedOrder.push_back("1");
             rejectedOrder.push_back(reason);
-            rejectedOrder.push_back("");
+            rejectedOrder.push_back(getDateTime());
         }
 
 
@@ -119,6 +116,8 @@ void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, 
     /*rejectedOrders.push_back(order[0]);*/
     rejectedOrderIDs.push_back(order[0]); // Assuming order[0] is the Client Order ID
 }
+
+
 
 void OrderValidator::getRejectedOrderIDs(std::vector<std::string>& orderIDs) {
     orderIDs = rejectedOrderIDs;
@@ -133,3 +132,27 @@ void OrderValidator::getRejectedOrderIDs(std::vector<std::string>& orderIDs) {
 //    num++;
 //    orderID = "er" + std::to_string(num);
 //}
+
+std::string OrderValidator::getDateTime()
+{
+    auto now = std::chrono::system_clock::now();
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+    auto epoch = now_ms.time_since_epoch();
+
+    std::time_t now_c = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+
+    std::tm time_info;
+#ifdef _WIN32
+    localtime_s(&time_info, &now_c); // Use localtime_s on Windows
+#else
+    localtime_r(&now_c, &time_info); // Use localtime_r on non-Windows systems
+#endif
+
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", &time_info);
+
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(epoch) % 1000;
+    sprintf_s(buffer, "%s.%03lld", buffer, ms.count());
+
+    return buffer;
+}

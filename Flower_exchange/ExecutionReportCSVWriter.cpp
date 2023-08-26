@@ -1,6 +1,4 @@
 #include "ExecutionReportCSVWriter.h"
-#include <iostream>
-#include <fstream>
 
 //make a function to include time and date
 
@@ -60,8 +58,8 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
         return;
     }
 
-    // Write the fields to the file and add a timestamp if the last field is empty
-    for (size_t i = 0; i < fields.size()-1; ++i) {
+    // Write the fields to the file
+    for (size_t i = 0; i < fields.size(); ++i) {
         file << fields[i];
         if (i < fields.size() - 1) {
             file << ",";
@@ -70,14 +68,14 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
 
     
 
-    if (fields[fields.size() - 1] == "") {
-        //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
-        file << getDateTime();
-	}
-    else {
-        //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
-        file << fields[fields.size() - 1];
-	}
+ //   if (fields[fields.size() - 1] == "") {
+ //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
+ //       file << getDateTime();
+	//}
+ //   else {
+ //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
+ //       file << fields[fields.size() - 1];
+	//}
 
     file << std::endl;
 

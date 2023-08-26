@@ -2,9 +2,12 @@
 #ifndef ORDER_VALIDATOR_H
 #define ORDER_VALIDATOR_H
 
+#include "ExecutionReportCSVWriter.h"
 #include <vector>
 #include <string>
-#include "ExecutionReportCSVWriter.h"
+#include <iostream>
+#include <ctime>
+#include <chrono>
 
 class OrderValidator {
 private:
@@ -14,6 +17,7 @@ private:
     
     void incrementrejectedOrders(std::string& orderID);
     void recordRejectedOrder(const std::vector<std::string>& order, const std::string& reason);
+    std::string getDateTime();
 
 public:
     OrderValidator(ExecutionReportCSVWriter& writer);
