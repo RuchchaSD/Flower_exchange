@@ -29,57 +29,70 @@ int main() {
     OrderProcessor orchidOrderprocessor("Orchid", writer);//ok
     //OrderDivider orderDivider(writer);//not implemented yet
 
+    //instrument buffers
     std::vector<std::vector<std::string>> roseOrders;
     std::vector<std::vector<std::string>> lavenderOrders;
     std::vector<std::vector<std::string>> lotusOrders;
     std::vector<std::vector<std::string>> tulipOrders;
     std::vector<std::vector<std::string>> orchidOrders;
 
+    //reader buffer
+    std::vector<std::vector<std::string>> newOrders;
+
     //read orders one line at a time and pass it to the validator
     std::vector<std::string> orderLine;
     while (reader.getNextOrderLine(orderLine)) {
-        int status = validator.newValidator(orderLine);
-        if (status == 0) {
-            std::cout << orderLine[1] <<": Order is rejected" << std::endl;
-			continue;
-		}
-		else {
-			//std::cout << "Order is accepted" << std::endl;
-			//orderDivider.divideOrder(orderLine);
-            if (status ==1 ) {
-				roseOrders.push_back(orderLine);
-			}
-            else if (status == 2 ) {
-				lavenderOrders.push_back(orderLine);
-			}
-            else if (status == 3) {
-				lotusOrders.push_back(orderLine);
-			}
-            else if (status == 4) {
-				tulipOrders.push_back(orderLine);
-			}
-            else if (status == 5) {
-				orchidOrders.push_back(orderLine);
-			}
+        newOrders.push_back(orderLine);
 
-            if (!roseOrders.empty()) {
-				roseOrderprocessor.ProcessOrder(roseOrders.front());
-                roseOrders.erase(roseOrders.begin());
-			}
-            else if (!lavenderOrders.empty()) {
-                lavenderOrderprocessor.ProcessOrder(lavenderOrders.front());
-				lavenderOrders.erase(lavenderOrders.begin());
-            }else if (!lotusOrders.empty()) {
-				lotusOrderprocessor.ProcessOrder(lotusOrders.front());
-                lotusOrders.erase(lotusOrders.begin());
-            }else if (!tulipOrders.empty()) {
-                tulipOrderprocessor.ProcessOrder(tulipOrders.front());
-                tulipOrders.erase(tulipOrders.begin());
+        while(!newOrders.empty()) 
+        {
+            int status = validator.newValidator(newOrders.front());
+            newOrders.erase(newOrders.begin());
+
+            if (status == 0) {
+                //std::cout << orderLine[1] <<": Order is rejected" << std::endl;
+                continue;
             }
-            else if (!orchidOrders.empty()) {
-				orchidOrderprocessor.ProcessOrder(orchidOrders.front());
-                orchidOrders.erase(orchidOrders.begin());
-			}
+            else {
+                //std::cout << "Order is accepted" << std::endl;
+                //orderDivider.divideOrder(orderLine);
+                if (status == 1) {
+                    roseOrders.push_back(orderLine);
+                }
+                else if (status == 2) {
+                    lavenderOrders.push_back(orderLine);
+                }
+                else if (status == 3) {
+                    lotusOrders.push_back(orderLine);
+                }
+                else if (status == 4) {
+                    tulipOrders.push_back(orderLine);
+                }
+                else if (status == 5) {
+                    orchidOrders.push_back(orderLine);
+                }
+
+                if (!roseOrders.empty()) {
+                    roseOrderprocessor.ProcessOrder(roseOrders.front());
+                    roseOrders.erase(roseOrders.begin());
+                }
+                else if (!lavenderOrders.empty()) {
+                    lavenderOrderprocessor.ProcessOrder(lavenderOrders.front());
+                    lavenderOrders.erase(lavenderOrders.begin());
+                }
+                else if (!lotusOrders.empty()) {
+                    lotusOrderprocessor.ProcessOrder(lotusOrders.front());
+                    lotusOrders.erase(lotusOrders.begin());
+                }
+                else if (!tulipOrders.empty()) {
+                    tulipOrderprocessor.ProcessOrder(tulipOrders.front());
+                    tulipOrders.erase(tulipOrders.begin());
+                }
+                else if (!orchidOrders.empty()) {
+                    orchidOrderprocessor.ProcessOrder(orchidOrders.front());
+                    orchidOrders.erase(orchidOrders.begin());
+                }
+            }
         }
 	}
     //add code to measure time at the end of the program
