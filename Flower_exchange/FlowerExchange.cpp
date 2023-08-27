@@ -18,7 +18,7 @@ int main() {
     //add code to measure time at the start of the program
     auto start = std::chrono::system_clock::now();
 
-    OrderCSVReader reader("data/order.csv"); // ok
+    OrderCSVReader reader("data/order.csv"); // make order.csv file to orders.csv to run 100000 inputs
     ExecutionReportCSVWriter writer("data/Execution_rep.csv"); // ok
     OrderValidator validator(writer);// ok
     //OrderBook orderBook("rose");//ok
