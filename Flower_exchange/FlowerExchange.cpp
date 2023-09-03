@@ -62,6 +62,31 @@ int main() {
     std::thread readerThread([&reader](std::vector<std::vector<std::string>>& orders, std::mutex& readerMtx, bool& doneReading) { 
         reader.getAllOrders(orders, readerMtx,doneReading); 
 		}, std::ref(newOrders), std::ref(readerMtx), std::ref(doneReading));
+
+    std::thread roseThread([&roseOrderprocessor](std::vector<std::vector<std::string>>& roseOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& roseMtx, bool& doneRose, int& doneWriting) {
+        roseOrderprocessor.ProcessAllOrders(roseOrders, executionReports, writerMtx, roseMtx, doneRose, doneWriting);
+        }, std::ref(roseOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(roseMtx), std::ref(doneRose), std::ref(doneWriting));
+    std::thread lavenderThread([&lavenderOrderprocessor](std::vector<std::vector<std::string>>& lavenderOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lavenderMtx, bool& doneLavender, int& doneWriting) {
+        lavenderOrderprocessor.ProcessAllOrders(lavenderOrders, executionReports, writerMtx, lavenderMtx, doneLavender, doneWriting);
+        }, std::ref(lavenderOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lavenderMtx), std::ref(doneLavender), std::ref(doneWriting));
+    std::thread lotusThread([&lotusOrderprocessor](std::vector<std::vector<std::string>>& lotusOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lotusMtx, bool& doneLotus, int& doneWriting) {
+        lotusOrderprocessor.ProcessAllOrders(lotusOrders, executionReports, writerMtx, lotusMtx, doneLotus, doneWriting);
+        }, std::ref(lotusOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lotusMtx), std::ref(doneLotus), std::ref(doneWriting));
+    std::thread tulipThread([&tulipOrderprocessor](std::vector<std::vector<std::string>>& tulipOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& tulipMtx, bool& doneTulip, int& doneWriting) {
+        tulipOrderprocessor.ProcessAllOrders(tulipOrders, executionReports, writerMtx, tulipMtx, doneTulip, doneWriting);
+        }, std::ref(tulipOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(tulipMtx), std::ref(doneTulip), std::ref(doneWriting));
+    std::thread orchidThread([&orchidOrderprocessor](std::vector<std::vector<std::string>>& orchidOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& orchidMtx, bool& doneOrchid, int& doneWriting) {
+        orchidOrderprocessor.ProcessAllOrders(orchidOrders, executionReports, writerMtx, orchidMtx, doneOrchid, doneWriting);
+        }, std::ref(orchidOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(orchidMtx), std::ref(doneOrchid), std::ref(doneWriting));
+
+
+
+
+
+
+
+
+
     //std::thread validatorThread([&validator](//validator thread if needed
     //    std::vector<std::vector<std::string>>& readerBuffer,
     //    std::vector<std::vector<std::string>>& writerBuffer,
@@ -188,21 +213,21 @@ int main() {
 
 
 
-    std::thread roseThread([&roseOrderprocessor](std::vector<std::vector<std::string>>& roseOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& roseMtx, bool& doneRose, int& doneWriting) {
-        roseOrderprocessor.ProcessAllOrders(roseOrders, executionReports, writerMtx, roseMtx, doneRose, doneWriting);
-        }, std::ref(roseOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(roseMtx), std::ref(doneRose), std::ref(doneWriting));
-    std::thread lavenderThread([&lavenderOrderprocessor](std::vector<std::vector<std::string>>& lavenderOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lavenderMtx, bool& doneLavender, int& doneWriting) {
-        lavenderOrderprocessor.ProcessAllOrders(lavenderOrders, executionReports, writerMtx, lavenderMtx, doneLavender, doneWriting);
-        }, std::ref(lavenderOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lavenderMtx), std::ref(doneLavender), std::ref(doneWriting));
-    std::thread lotusThread([&lotusOrderprocessor](std::vector<std::vector<std::string>>& lotusOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lotusMtx, bool& doneLotus, int& doneWriting) {
-        lotusOrderprocessor.ProcessAllOrders(lotusOrders, executionReports, writerMtx, lotusMtx, doneLotus, doneWriting);
-        }, std::ref(lotusOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lotusMtx), std::ref(doneLotus), std::ref(doneWriting));
-    std::thread tulipThread([&tulipOrderprocessor](std::vector<std::vector<std::string>>& tulipOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& tulipMtx, bool& doneTulip, int& doneWriting) {
-        tulipOrderprocessor.ProcessAllOrders(tulipOrders, executionReports, writerMtx, tulipMtx, doneTulip, doneWriting);
-        }, std::ref(tulipOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(tulipMtx), std::ref(doneTulip), std::ref(doneWriting));
-    std::thread orchidThread([&orchidOrderprocessor](std::vector<std::vector<std::string>>& orchidOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& orchidMtx, bool& doneOrchid, int& doneWriting) {
-        orchidOrderprocessor.ProcessAllOrders(orchidOrders, executionReports, writerMtx, orchidMtx, doneOrchid, doneWriting);
-        }, std::ref(orchidOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(orchidMtx), std::ref(doneOrchid), std::ref(doneWriting));
+    //std::thread roseThread([&roseOrderprocessor](std::vector<std::vector<std::string>>& roseOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& roseMtx, bool& doneRose, int& doneWriting) {
+    //    roseOrderprocessor.ProcessAllOrders(roseOrders, executionReports, writerMtx, roseMtx, doneRose, doneWriting);
+    //    }, std::ref(roseOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(roseMtx), std::ref(doneRose), std::ref(doneWriting));
+    //std::thread lavenderThread([&lavenderOrderprocessor](std::vector<std::vector<std::string>>& lavenderOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lavenderMtx, bool& doneLavender, int& doneWriting) {
+    //    lavenderOrderprocessor.ProcessAllOrders(lavenderOrders, executionReports, writerMtx, lavenderMtx, doneLavender, doneWriting);
+    //    }, std::ref(lavenderOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lavenderMtx), std::ref(doneLavender), std::ref(doneWriting));
+    //std::thread lotusThread([&lotusOrderprocessor](std::vector<std::vector<std::string>>& lotusOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lotusMtx, bool& doneLotus, int& doneWriting) {
+    //    lotusOrderprocessor.ProcessAllOrders(lotusOrders, executionReports, writerMtx, lotusMtx, doneLotus, doneWriting);
+    //    }, std::ref(lotusOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lotusMtx), std::ref(doneLotus), std::ref(doneWriting));
+    //std::thread tulipThread([&tulipOrderprocessor](std::vector<std::vector<std::string>>& tulipOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& tulipMtx, bool& doneTulip, int& doneWriting) {
+    //    tulipOrderprocessor.ProcessAllOrders(tulipOrders, executionReports, writerMtx, tulipMtx, doneTulip, doneWriting);
+    //    }, std::ref(tulipOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(tulipMtx), std::ref(doneTulip), std::ref(doneWriting));
+    //std::thread orchidThread([&orchidOrderprocessor](std::vector<std::vector<std::string>>& orchidOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& orchidMtx, bool& doneOrchid, int& doneWriting) {
+    //    orchidOrderprocessor.ProcessAllOrders(orchidOrders, executionReports, writerMtx, orchidMtx, doneOrchid, doneWriting);
+    //    }, std::ref(orchidOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(orchidMtx), std::ref(doneOrchid), std::ref(doneWriting));
 
     roseThread.join();
     lavenderThread.join();
