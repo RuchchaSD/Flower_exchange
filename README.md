@@ -31,8 +31,8 @@ The project is structured as follows:
 
 ## Branches
 
-- The non-concurrent approach can be found in the 3rd branch of this repository.
-- The concurrent approach can be found in the 5th branch of this repository.
+- The non-concurrent approach can be found in the '2.nonconcurrent' branch of this repository.
+- The concurrent approach can be found in the '4.concurrent_2' branch of this repository.
 
 Feel free to explore and use the branch that best suits your needs.
 
