@@ -48,8 +48,10 @@ void OrderCSVReader::changeFilename(const std::string& newFilename) {
 void OrderCSVReader::getAllOrders(std::vector<std::vector<std::string>>& orders, std::mutex& readerMtx, bool& doneReading) {
     std::vector<std::string> orderLine;
     while (getNextOrderLine(orderLine)) {
-        std::lock_guard<std::mutex> lock(readerMtx);
-        orders.push_back(orderLine);
+        {
+            std::lock_guard<std::mutex> lock(readerMtx);
+            orders.push_back(orderLine);
+        }
     }
     {
         std::lock_guard<std::mutex> lock(readerMtx);
