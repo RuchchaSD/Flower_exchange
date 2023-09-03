@@ -178,60 +178,56 @@ void OrderValidator::validateAllorders(
     //int count = 0;
     bool flag = false;
     std::vector<std::string> order;
-    while (true) {
+    while (true) {   
         {
-            
-            {
-                //count++;
-                std::unique_lock<std::mutex> lock(readerMtx);
-                if (!readerBuffer.empty()) {
-                    flag = true;
-                    order = readerBuffer[0];
-                    readerBuffer.erase(readerBuffer.begin());
-                    
-                }
-                else if (doneReading) {
-                    //std::cout << "Count : "<< count << std::endl;
-                    break;
-                }
+            //count++;
+            std::unique_lock<std::mutex> lock(readerMtx);
+            if (!readerBuffer.empty()) {
+                flag = true;
+                order = readerBuffer[0];
+                readerBuffer.erase(readerBuffer.begin());
+                
             }
-            if (flag) {
-                flag = false;
-                int status = threadValidator(order, writerBuffer, writerMtx);
-                if (status == 1) {
-                    std::lock_guard<std::mutex> lock(roseMtx);
-                    roseOrders.push_back(order);
-                }
-                else if (status == 2) {
-                    std::lock_guard<std::mutex> lock(lavenderMtx);
-                    lavenderOrders.push_back(order);
-                }
-                else if (status == 3) {
-                    std::lock_guard<std::mutex> lock(lotusMtx);
-                    lotusOrders.push_back(order);
-                }
-                else if (status == 4) {
-                    std::lock_guard<std::mutex> lock(tulipMtx);
-                    tulipOrders.push_back(order);
-                }
-                else if (status == 5) {
-                    std::lock_guard<std::mutex> lock(orchidMtx);
-                    orchidOrders.push_back(order);
-                }
+            else if (doneReading) {
+                //std::cout << "Count : "<< count << std::endl;
+                break;
             }
-
         }
-        {
-            std::unique_lock<std::mutex> 
-                lock1(roseMtx),
-                lock2(lavenderMtx),
-                lock3(lotusMtx),
-                lock4(tulipMtx),
-                lock5(orchidMtx),
-                lock6(writerMtx);
-            doneRose = doneLavender = doneLotus = doneTulip = doneOrchid = true;
-            doneWriting++;
+        if (flag) {
+            flag = false;
+            int status = threadValidator(order, writerBuffer, writerMtx);
+            if (status == 1) {
+                std::lock_guard<std::mutex> lock(roseMtx);
+                roseOrders.push_back(order);
+            }
+            else if (status == 2) {
+                std::lock_guard<std::mutex> lock(lavenderMtx);
+                lavenderOrders.push_back(order);
+            }
+            else if (status == 3) {
+                std::lock_guard<std::mutex> lock(lotusMtx);
+                lotusOrders.push_back(order);
+            }
+            else if (status == 4) {
+                std::lock_guard<std::mutex> lock(tulipMtx);
+                tulipOrders.push_back(order);
+            }
+            else if (status == 5) {
+                std::lock_guard<std::mutex> lock(orchidMtx);
+                orchidOrders.push_back(order);
+            }
         }
+    }
+    {
+        std::unique_lock<std::mutex>
+            lock1(roseMtx),
+            lock2(lavenderMtx),
+            lock3(lotusMtx),
+            lock4(tulipMtx),
+            lock5(orchidMtx),
+            lock6(writerMtx);
+        doneRose = doneLavender = doneLotus = doneTulip = doneOrchid = true;
+        doneWriting++;
     }
 }
 
