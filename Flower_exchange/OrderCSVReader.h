@@ -4,6 +4,10 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <mutex>
+#include <iostream>
+#include <sstream>
+#include <condition_variable>
 
 using namespace std;
 
@@ -19,6 +23,7 @@ public:
 
     bool getNextOrderLine(std::vector<std::string>& orderLine);
     void changeFilename(const std::string& newFilename);
+    void getAllOrders(std::vector<std::vector<std::string>>& orders, std::mutex& readerMtx, bool& doneReading);
 };
 
 #endif // ORDER_CSV_READER_H
