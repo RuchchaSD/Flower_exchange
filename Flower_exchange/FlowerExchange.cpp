@@ -40,6 +40,8 @@ int main() {
 
     //reader buffer
     std::vector<std::vector<std::string>> newOrders;
+    //writer buffer
+    std::vector<std::vector<std::string>> executionReports;
 
     std::mutex readerMtx;
     std::mutex roseMtx;

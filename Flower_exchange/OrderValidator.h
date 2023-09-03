@@ -8,6 +8,7 @@
 #include <iostream>
 #include <ctime>
 #include <chrono>
+#include <mutex>
 
 class OrderValidator {
 private:
@@ -17,6 +18,7 @@ private:
     
     void incrementrejectedOrders(std::string& orderID);
     void recordRejectedOrder(const std::vector<std::string>& order, const std::string& reason);
+    std::vector<std::string> getRejectedReport(const std::vector<std::string>& order, const std::string& reason);
     std::string getDateTime();
 
 public:
@@ -27,6 +29,32 @@ public:
     int newValidator(const std::vector<std::string>& order);
     void getRejectedOrderIDs(std::vector<std::string>& orderIDs);
     void getRejectedOrders(std::vector<std::string>& orders);
+
+    void validateAllorders(
+        std::vector<std::vector<std::string>>& readerBuffer,
+        std::vector<std::vector<std::string>>& writerBuffer,
+        std::vector<std::vector<std::string>>& roseOrders,
+        std::vector<std::vector<std::string>>& lavenderOrders,
+        std::vector<std::vector<std::string>>& lotusOrders,
+        std::vector<std::vector<std::string>>& tulipOrders,
+        std::vector<std::vector<std::string>>& orchidOrders,
+        std::mutex& readerMtx,
+        std::mutex& writerMtx,
+        std::mutex& roseMtx,
+        std::mutex& lavenderMtx,
+        std::mutex& lotusMtx,
+        std::mutex& tulipMtx,
+        std::mutex& orchidMtx,
+        bool& doneReading,
+        bool& doneRose,
+        bool& doneLavender,
+        bool& doneLotus,
+        bool& doneTulip,
+        bool& doneOrchid,
+        int& doneWriting);
+
+        int threadValidator(const std::vector<std::string>& order, std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx);
+
 };
 
 #endif // ORDER_VALIDATOR_H

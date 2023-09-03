@@ -117,10 +117,95 @@ void OrderValidator::recordRejectedOrder(const std::vector<std::string>& order, 
     rejectedOrderIDs.push_back(order[0]); // Assuming order[0] is the Client Order ID
 }
 
+std::vector<std::string> OrderValidator::getRejectedReport(const std::vector<std::string>& order, const std::string& reason)
+{
+    std::vector<std::string> rejectedOrder;
+    if (order.size() == 6) {
+        rejectedOrder = { order[0],order[1],order[2],order[3],order[4],order[5],"1",reason,getDateTime() };
+    }
+    else {
+        if (order.size() < 6) {
+            for (int i = 0; i < order.size(); i++) {
+                rejectedOrder.push_back(order[i]);
+            }
+            for (int i = 0; i < 6 - order.size(); i++) {
+                rejectedOrder.push_back("");
+            }
+            rejectedOrder.push_back("1");
+            rejectedOrder.push_back(reason);
+            rejectedOrder.push_back(getDateTime());
+        }
+        else {
+            for (int i = 0; i < 5; i++) {
+                rejectedOrder.push_back(order[i]);
+            }
+            std::string txt = "";
+            for (int i = 5; i < order.size(); i++) {
+                txt += order[i] + " ";
+            }
+            rejectedOrder.push_back(txt);
+            rejectedOrder.push_back("1");
+            rejectedOrder.push_back(reason);
+            rejectedOrder.push_back(getDateTime());
+        }
+
+
+
+    }
+    return rejectedOrder;
+}
+
 
 
 void OrderValidator::getRejectedOrderIDs(std::vector<std::string>& orderIDs) {
     orderIDs = rejectedOrderIDs;
+}
+
+int OrderValidator::threadValidator(const std::vector<std::string>& order, std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx)
+{
+    std::string reason = "";
+    // check for required fields
+    if (order.size() != 6) {
+        reason = "Invalid number of fields";
+    }
+    else if (order[3] != "1" && order[3] != "2") {// check for invalid side
+        reason = "Invalid side";
+    }
+    else if (stod(order[4]) <= 0) {// check for price greater than 0
+        reason = "Price must be greater than 0";
+    }
+    else if (stoi(order[5]) % 10 != 0) {// check for quantity multiple of 10
+        reason = "Quantity must be a multiple of 10";
+    }
+    else if (stoi(order[5]) < 10 || stoi(order[5]) > 1000) {// check for quantity in range
+        reason = "Quantity must be in the range 10 to 1000";
+    }
+    else {
+        if (order[2] == "Rose") {
+            return 1;
+        }
+        else if (order[2] == "Lavender") {
+            return 2;
+        }
+        else if (order[2] == "Lotus") {
+            return 3;
+        }
+        else if (order[2] == "Tulip") {
+            return 4;
+        }
+        else if (order[2] == "Orchid") {
+            return 5;
+        }
+        else {
+            reason = "Invalid instrument";
+        }
+    }
+    std::vector<std::string> rejectedOrder = getRejectedReport(order, reason);
+    {
+        std::unique_lock<std::mutex> lock(writerMtx);
+        writerBuffer.push_back(rejectedOrder);
+    }
+    return 0;
 }
 
 //void OrderValidator::getRejectedOrders(std::vector<std::string>& orders) {
