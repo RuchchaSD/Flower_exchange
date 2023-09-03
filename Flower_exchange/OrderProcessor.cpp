@@ -10,8 +10,7 @@ OrderProcessor::~OrderProcessor()
 
 void OrderProcessor::recordOrder(const std::vector<std::string>& order, int status, std::string quantity, double price)
 {
-	//print vec + status + quantity + price
-	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",getDateTime()};
+	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",getDateTime() };
 	//OrderId, C_Id, Instrument, Side, Price,  Quantity,  Status,Reason, TimeStamp
 
 	// Write order details to execution report writer
@@ -22,7 +21,7 @@ void OrderProcessor::updateOrder(std::vector<std::string>& order, int quantity)
 {
 	// Update the order's quantity
 	order[5] = std::to_string(quantity);
-	//return order;
+
 }
 
 
@@ -57,7 +56,7 @@ void OrderProcessor::ProcessOrder(const std::vector<std::string>& ord)
 						orderBook.updateSellMinVec(SellVec);		//Update Sell order book
 						temp = false;
 					}
-					
+
 					else {//SellQuantity < BuyQuantity
 						recordOrder(order, 3, SellVec[5], orderBook.getSellMinVal());
 						recordOrder(SellVec, 2, SellVec[5], orderBook.getSellMinVal());
@@ -102,7 +101,7 @@ void OrderProcessor::ProcessOrder(const std::vector<std::string>& ord)
 						orderBook.updateBuyMaxVec(BuyVec);		//update buy order book
 						temp = false;
 					}
-					
+
 					else {//SellQuantity > BuyQuantity
 						recordOrder(order, 3, BuyVec[5], orderBook.getBuyMaxVal());
 						recordOrder(BuyVec, 2, BuyVec[5], orderBook.getBuyMaxVal());

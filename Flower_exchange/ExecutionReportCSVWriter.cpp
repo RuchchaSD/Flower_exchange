@@ -1,20 +1,8 @@
 #include "ExecutionReportCSVWriter.h"
 
 //make a function to include time and date
-
 std::string ExecutionReportCSVWriter::getDateTime()
 {
-    //auto now = std::chrono::system_clock::now();
-    //std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-
-    //std::tm time_info;
-    //localtime_s(&time_info, &now_c); // Use localtime_s on Windows, or localtime on other systems
-
-    //char buffer[80];
-    //std::strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", &time_info);
-
-    //return buffer;
-
     auto now = std::chrono::system_clock::now();
     auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
     auto epoch = now_ms.time_since_epoch();
@@ -40,8 +28,7 @@ std::string ExecutionReportCSVWriter::getDateTime()
 ExecutionReportCSVWriter::ExecutionReportCSVWriter(const std::string& filename) : filename(filename) {
     file.open(filename, std::ios_base::app);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
-        // Handle error, e.g., throw an exception
+        std::cerr << "Failed to open file: " << filename << std::endl;      // Handle error, e.g., throw an exception
     }
 }
 
@@ -65,17 +52,6 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
             file << ",";
         }
     }
-
-    
-
- //   if (fields[fields.size() - 1] == "") {
- //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
- //       file << getDateTime();
-	//}
- //   else {
- //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
- //       file << fields[fields.size() - 1];
-	//}
 
     file << std::endl;
 
