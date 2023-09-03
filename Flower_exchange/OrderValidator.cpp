@@ -175,22 +175,37 @@ void OrderValidator::validateAllorders(
     std::mutex& orchidMtx, bool& doneReading,
     bool& doneRose, bool& doneLavender, bool& doneLotus, bool& doneTulip, bool& doneOrchid, int& doneWriting)
 {
-    //int count = 0;
+    int countOut = 0;
+    int count = 0;
     bool flag = false;
     std::vector<std::string> order;
+    bool emt = false;
+    //std::this_thread::sleep_for(std::chrono::milliseconds(2));
     while (true) {   
         {
-            //count++;
-            std::unique_lock<std::mutex> lock(readerMtx);
-            if (!readerBuffer.empty()) {
+            emt = readerBuffer.size() > 20;
+            countOut++;
+            
+            if (emt) {
+                std::unique_lock<std::mutex> lock(readerMtx);
+                count++;
                 flag = true;
                 order = readerBuffer[0];
                 readerBuffer.erase(readerBuffer.begin());
                 
             }
             else if (doneReading) {
-                //std::cout << "Count : "<< count << std::endl;
-                break;
+                
+                if (readerBuffer.empty()) {
+                    std::cout << "CountOut : " << countOut << " Count : " << count << std::endl;
+                    break;
+                }else {
+					/*std::unique_lock<std::mutex> lock(readerMtx);*/
+					count++;
+					flag = true;
+					order = readerBuffer[0];
+					readerBuffer.erase(readerBuffer.begin());
+				}
             }
         }
         if (flag) {

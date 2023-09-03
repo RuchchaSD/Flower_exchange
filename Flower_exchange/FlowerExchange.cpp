@@ -62,7 +62,6 @@ int main() {
     std::thread readerThread([&reader](std::vector<std::vector<std::string>>& orders, std::mutex& readerMtx, bool& doneReading) { 
         reader.getAllOrders(orders, readerMtx,doneReading); 
 		}, std::ref(newOrders), std::ref(readerMtx), std::ref(doneReading));
-
     //std::thread validatorThread([&validator](//validator thread if needed
     //    std::vector<std::vector<std::string>>& readerBuffer,
     //    std::vector<std::vector<std::string>>& writerBuffer,
@@ -93,68 +92,47 @@ int main() {
     //    std::ref(newOrders), std::ref(executionReports), std::ref(roseOrders), std::ref(lavenderOrders), std::ref(lotusOrders), std::ref(tulipOrders), std::ref(orchidOrders),
     //    std::ref(readerMtx), std::ref(writerMtx), std::ref(roseMtx), std::ref(lavenderMtx), std::ref(lotusMtx), std::ref(tulipMtx), std::ref(orchidMtx),
     //    std::ref(doneReading), std::ref(doneRose), std::ref(doneLavender), std::ref(doneLotus), std::ref(doneTulip), std::ref(doneOrchid), std::ref(doneWriting));
-
     validator.validateAllorders(std::ref(newOrders), std::ref(executionReports), std::ref(roseOrders), std::ref(lavenderOrders), std::ref(lotusOrders), std::ref(tulipOrders), std::ref(orchidOrders),
         std::ref(readerMtx), std::ref(writerMtx), std::ref(roseMtx), std::ref(lavenderMtx), std::ref(lotusMtx), std::ref(tulipMtx), std::ref(orchidMtx),
         std::ref(doneReading), std::ref(doneRose), std::ref(doneLavender), std::ref(doneLotus), std::ref(doneTulip), std::ref(doneOrchid), std::ref(doneWriting)
     );
-
-
+    //
     readerThread.join();
     //validatorThread.join();
-    /*std::cout << "newOrders : " << newOrders.size() << endl;
-    std::cout << "roseOrders : " << roseOrders.size() << endl;
-    std::cout << "lavenderOrders : " << lavenderOrders.size() << endl;
-    std::cout << "lotusOrders : " << lotusOrders.size() << endl;
-    std::cout << "tulipOrders : " << tulipOrders.size() << endl;
-    std::cout << "orchidOrders : " << orchidOrders.size() << endl;
-    std::cout << "invalidOrders : " << executionReports.size() << endl;
-    int total = roseOrders.size() + lavenderOrders.size() + lotusOrders.size() + tulipOrders.size() + orchidOrders.size() + executionReports.size(); 
-    std::cout << "total : " << total << endl;*/
+  //  std::cout << "newOrders : " << newOrders.size() << endl;
+  //  std::cout << "roseOrders : " << roseOrders.size() << endl;
+  //  std::cout << "lavenderOrders : " << lavenderOrders.size() << endl;
+  //  std::cout << "lotusOrders : " << lotusOrders.size() << endl;
+  //  std::cout << "tulipOrders : " << tulipOrders.size() << endl;
+  //  std::cout << "orchidOrders : " << orchidOrders.size() << endl;
+  //  std::cout << "writerBuffer : " << executionReports.size() << endl;
+  //  int total = roseOrders.size() + lavenderOrders.size() + lotusOrders.size() + tulipOrders.size() + orchidOrders.size() + executionReports.size(); 
+  //  std::cout << "total : " << total << endl;
 
- //   int newOrderCount = 0;
- //   int roseOrderCount = 0;
- //   int lavenderOrderCount = 0;
- //   int lotusOrderCount = 0;
- //   int tulipOrderCount = 0;
- //   int orchidOrderCount = 0;
- //   int invalidOrderCount = 0;
- //   //read orders one line at a time and pass it to the validator
+ /*   int newOrderCount = 0;
+    int roseOrderCount = 0;
+    int lavenderOrderCount = 0;
+    int lotusOrderCount = 0;
+    int tulipOrderCount = 0;
+    int orchidOrderCount = 0;
+    int invalidOrderCount = 0;*/
+    //read orders one line at a time and pass it to the validator
  //   std::vector<std::string> orderLine;
  //   while (reader.getNextOrderLine(orderLine)) {
- //       newOrders.push_back(orderLine);
- //       newOrderCount++;
- //       while(!newOrders.empty()) 
- //       {
- //           int status = validator.newValidator(newOrders.front());
- //           newOrders.erase(newOrders.begin());
- //           if (status == 0) {
- //               invalidOrderCount++;
- //               //std::cout << orderLine[1] <<": Order is rejected" << std::endl;
- //               continue;
- //           }
- //           else {
- //               if (status == 1) {
- //                   roseOrders.push_back(orderLine);
- //                   roseOrderCount++;
- //               }
- //               else if (status == 2) {
- //                   lavenderOrders.push_back(orderLine);
- //                   lavenderOrderCount++;
- //               }
- //               else if (status == 3) {
- //                   lotusOrders.push_back(orderLine);
- //                   lotusOrderCount++;
- //               }
- //               else if (status == 4) {
- //                   tulipOrders.push_back(orderLine);
- //                   tulipOrderCount++;
- //               }
- //               else if (status == 5) {
- //                   orchidOrders.push_back(orderLine);
- //                   orchidOrderCount++;
- //               }
-
+ //       int status = validator.newValidator(orderLine);
+ //       if (status == 0) {
+ //           continue;
+ //       }else if (status == 1) {
+ //           roseOrders.push_back(orderLine);
+ //       }else if (status == 2) {
+ //           lavenderOrders.push_back(orderLine);
+ //       }else if (status == 3) {
+ //           lotusOrders.push_back(orderLine);
+ //       }else if (status == 4) {
+ //           tulipOrders.push_back(orderLine);
+ //       }else if (status == 5) {
+ //           orchidOrders.push_back(orderLine);
+ //       }
  //               /*if (!roseOrders.empty()) {
  //                   roseOrderprocessor.ProcessOrder(roseOrders.front());
  //                   roseOrders.erase(roseOrders.begin());
@@ -175,9 +153,66 @@ int main() {
  //                   orchidOrderprocessor.ProcessOrder(orchidOrders.front());
  //                   orchidOrders.erase(orchidOrders.begin());
  //               }*/
- //           }
- //       }
+ //             
 	//}
+
+
+
+    //std::vector<std::string> orderLine;
+    //while (reader.getNextOrderLine(orderLine)) {
+    //    int status = validator.threadValidator(orderLine,executionReports,writerMtx);
+    //    if (status == 1) {
+    //        roseOrders.push_back(orderLine);
+    //    }
+    //    else if (status == 2) {
+    //        lavenderOrders.push_back(orderLine);
+    //    }
+    //    else if (status == 3) {
+    //        lotusOrders.push_back(orderLine);
+    //    }
+    //    else if (status == 4) {
+    //        tulipOrders.push_back(orderLine);
+    //    }
+    //    else if (status == 5) {
+    //        orchidOrders.push_back(orderLine);
+    //    }
+    //}
+    //doneRose = doneLavender = doneLotus = doneTulip = doneOrchid = true;
+    ////cout << "next phase" << endl;
+
+    /*cout << "rose orders : " << roseOrders.size() << endl;
+    cout << "lavender orders : " << lavenderOrders.size() << endl;  
+    cout << "lotus orders : " << lotusOrders.size() << endl;
+    cout << "tulip orders : " << tulipOrders.size() << endl;
+    cout << "orchid orders : " << orchidOrders.size() << endl;*/
+
+
+
+    std::thread roseThread([&roseOrderprocessor](std::vector<std::vector<std::string>>& roseOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& roseMtx, bool& doneRose, int& doneWriting) {
+        roseOrderprocessor.ProcessAllOrders(roseOrders, executionReports, writerMtx, roseMtx, doneRose, doneWriting);
+        }, std::ref(roseOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(roseMtx), std::ref(doneRose), std::ref(doneWriting));
+    std::thread lavenderThread([&lavenderOrderprocessor](std::vector<std::vector<std::string>>& lavenderOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lavenderMtx, bool& doneLavender, int& doneWriting) {
+        lavenderOrderprocessor.ProcessAllOrders(lavenderOrders, executionReports, writerMtx, lavenderMtx, doneLavender, doneWriting);
+        }, std::ref(lavenderOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lavenderMtx), std::ref(doneLavender), std::ref(doneWriting));
+    std::thread lotusThread([&lotusOrderprocessor](std::vector<std::vector<std::string>>& lotusOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& lotusMtx, bool& doneLotus, int& doneWriting) {
+        lotusOrderprocessor.ProcessAllOrders(lotusOrders, executionReports, writerMtx, lotusMtx, doneLotus, doneWriting);
+        }, std::ref(lotusOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(lotusMtx), std::ref(doneLotus), std::ref(doneWriting));
+    std::thread tulipThread([&tulipOrderprocessor](std::vector<std::vector<std::string>>& tulipOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& tulipMtx, bool& doneTulip, int& doneWriting) {
+        tulipOrderprocessor.ProcessAllOrders(tulipOrders, executionReports, writerMtx, tulipMtx, doneTulip, doneWriting);
+        }, std::ref(tulipOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(tulipMtx), std::ref(doneTulip), std::ref(doneWriting));
+    std::thread orchidThread([&orchidOrderprocessor](std::vector<std::vector<std::string>>& orchidOrders, std::vector<std::vector<std::string>>& executionReports, std::mutex& writerMtx, std::mutex& orchidMtx, bool& doneOrchid, int& doneWriting) {
+        orchidOrderprocessor.ProcessAllOrders(orchidOrders, executionReports, writerMtx, orchidMtx, doneOrchid, doneWriting);
+        }, std::ref(orchidOrders), std::ref(executionReports), std::ref(writerMtx), std::ref(orchidMtx), std::ref(doneOrchid), std::ref(doneWriting));
+
+    roseThread.join();
+    lavenderThread.join();
+    lotusThread.join();
+    tulipThread.join();
+    orchidThread.join();
+
+
+
+
 
  //   std::cout << "newOrders : " << newOrderCount << endl;
  //   std::cout << "roseOrders : " << roseOrderCount << endl;
