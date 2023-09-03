@@ -190,7 +190,7 @@ void OrderValidator::validateAllorders(
                 std::unique_lock<std::mutex> lock(readerMtx);
                 count++;
                 flag = true;
-                order = readerBuffer[0];
+                order = readerBuffer.front();
                 readerBuffer.erase(readerBuffer.begin());
                 
             }
@@ -286,11 +286,47 @@ int OrderValidator::threadValidator(const std::vector<std::string>& order, std::
         }
     }
     std::vector<std::string> rejectedOrder = getRejectedReport(order, reason);
+    //std::string rejectedLine = getRejectedOrderLine(order, reason);
     {
         std::unique_lock<std::mutex> lock(writerMtx);
+        //writerBuffer += rejectedLine;
         writerBuffer.push_back(rejectedOrder);
     }
     return 0;
+}
+
+std::string OrderValidator::getRejectedOrderLine(const std::vector<std::string>& order, const std::string& reason)
+{
+    std::string line = "";
+    if (order.size() == 6) {
+        line = order[0] + "," + order[1] + "," + order[2] + "," + order[3] + "," + order[4] + "," + order[5] + ",1," + reason + "," + getDateTime();
+    }
+    else {
+        if (order.size() < 6) {
+            for (int i = 0; i < order.size(); i++) {
+                line += order[i] + ",";
+            }
+            for (int i = 0; i < 6 - order.size(); i++) {
+                line += ",";
+            }
+            line += "1," + reason + "," + getDateTime();
+        }
+        else {
+            for (int i = 0; i < 5; i++) {
+                line += order[i] + ",";
+            }
+            std::string txt = "";
+            for (int i = 5; i < order.size(); i++) {
+                txt += order[i] + " ";
+
+            }
+            line += txt + "," + "1," + reason + "," + getDateTime();
+        }
+
+
+
+    }
+    return line;
 }
 
 //void OrderValidator::getRejectedOrders(std::vector<std::string>& orders) {

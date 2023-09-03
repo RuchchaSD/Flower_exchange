@@ -134,7 +134,7 @@ void OrderProcessor::ProcessAllOrders(std::vector<std::vector<std::string>>& ord
 	std::vector<std::string> order;
 	while (true) {
 		{
-			emt = orderBuffer.size() > 20;
+			emt = orderBuffer.size() > 50;
 			countOut++;
 			if (emt) {
 				std::unique_lock<std::mutex> lock(orderMtx);
@@ -294,11 +294,13 @@ void OrderProcessor::ProcessOrder(const std::vector<std::string>& ord, std::vect
 void OrderProcessor::recordOrder(const std::vector<std::string>& order, int status, std::string quantity, double price, std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx)
 {
 	//print vec + status + quantity + price
-	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",getDateTime() }; 
+	std::vector<std::string> orderDetails = { order[0], order[1], order[2], order[3],std::to_string(price),quantity, std::to_string(status),"_",getDateTime() };
+	//std::string orderLine = order[0] + "," + order[1] + "," + order[2] + "," + order[3] + "," + std::to_string(price) + "," + quantity + "," + std::to_string(status) + ",_," + getDateTime();
 	//OrderId, C_Id, Instrument, Side, Price,  Quantity,  Status,Reason, TimeStamp
 	// Write order details to writerBuffer
 	{
 		std::unique_lock<std::mutex> lock(writerMtx);
+		//writerBuffer += orderLine;
 		writerBuffer.push_back(orderDetails);
 	}
 

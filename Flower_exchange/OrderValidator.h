@@ -54,6 +54,7 @@ public:
         int& doneWriting);
 
         int threadValidator(const std::vector<std::string>& order, std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx);
+        std::string getRejectedOrderLine(const std::vector<std::string>& order, const std::string& reason);
 
 };
 

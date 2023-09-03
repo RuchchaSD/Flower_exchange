@@ -8,6 +8,7 @@
 #include <iostream>
 #include <ctime>
 #include <chrono>
+#include <mutex>
 
 class ExecutionReportCSVWriter {
 private:
@@ -24,6 +25,9 @@ public:
     void writeExecutionRecord(const std::vector<std::string>& fields);
     void changeFilename(const std::string& newFilename);
     const std::vector<std::string>& getOrderIDs() const;
+
+    void writeAllRecords( std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx, int& doneWriting);
+    void writeExecutionRecord(std::string record);
 };
 
 #endif // EXECUTION_REPORT_CSV_WRITER_H

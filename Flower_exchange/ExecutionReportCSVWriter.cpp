@@ -57,7 +57,7 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
         std::cerr << "File is not open for writing: " << filename << std::endl;
         return;
     }
-
+    //std::string  line = fields[0] + "," + fields[1] + "," + fields[2] + "," + fields[3] + "," + fields[4] + "," + fields[5] + "," + fields[6] + "," + fields[7] + "," + getDateTime();
     // Write the fields to the file
     for (size_t i = 0; i < fields.size(); ++i) {
         file << fields[i];
@@ -65,24 +65,8 @@ void ExecutionReportCSVWriter::writeExecutionRecord(const std::vector<std::strin
             file << ",";
         }
     }
-
-    
-
- //   if (fields[fields.size() - 1] == "") {
- //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
- //       file << getDateTime();
-	//}
- //   else {
- //       //file << fields[0] << "," << fields[1] << "," << fields[2] << "," << fields[3] << "," << fields[4] << "," << fields[5] << "," << fields[6] << "," << fields[7];
- //       file << fields[fields.size() - 1];
-	//}
-
+    //file << line;
     file << std::endl;
-
-    // Assuming the Order ID is the first field in the vector
-    if (!fields.empty()) {
-        orderIDs.push_back(fields[0]);
-    }
 }
 
 //make a function to change the filename
@@ -94,4 +78,56 @@ void ExecutionReportCSVWriter::changeFilename(const std::string& newFilename) {
 //make a function to get the order IDs
 const std::vector<std::string>& ExecutionReportCSVWriter::getOrderIDs() const {
     return orderIDs;
+}
+
+void ExecutionReportCSVWriter::writeAllRecords(std::vector<std::vector<std::string>>& writerBuffer, std::mutex& writerMtx, int& doneWriting)
+{
+    int countOut = 0;
+    int count = 0;
+    bool flag = false;
+    bool emt = false;
+    std::vector<std::string> order;
+    while (true) {
+        {
+            emt = writerBuffer.size() > 20;
+            countOut++;
+            if (emt) {
+                std::unique_lock<std::mutex> lock(writerMtx);
+                flag = true;
+                order = writerBuffer[0];
+                writerBuffer.erase(writerBuffer.begin());
+                count++;
+            }else if (doneWriting > 5) {
+                //std::unique_lock<std::mutex> lock(orderMtx);
+                if (writerBuffer.empty()) {
+                    std::cout << "Count : " << count << " CountOut : " << countOut << std::endl;
+                    break;
+                }
+                else {
+                    flag = true;
+                    order = writerBuffer[0]; 
+                    writerBuffer.erase(writerBuffer.begin()); 
+                    count++; 
+                }
+
+            }
+        }
+        if (flag) {
+            flag = false;
+            writeExecutionRecord(order);
+        }
+    }
+}
+
+void ExecutionReportCSVWriter::writeExecutionRecord(std::string record)
+{
+    if (!file.is_open()) {
+        std::cerr << "File is not open for writing: " << filename << std::endl;
+        return;
+    }
+    //check whether the last character is a new line
+    if (record.back() != '\n') {
+		record += '\n';
+	}
+	file << record;
 }

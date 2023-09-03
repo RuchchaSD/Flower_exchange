@@ -49,8 +49,16 @@ void OrderCSVReader::getAllOrders(std::vector<std::vector<std::string>>& orders,
     std::vector<std::string> orderLine;
     while (getNextOrderLine(orderLine)) {
         {
-            std::lock_guard<std::mutex> lock(readerMtx);
+            
+            std::unique_lock<std::mutex> lock(readerMtx);
             orders.push_back(orderLine);
+            /*if (orders.size() > 50) {
+                orders.push_back(orderLine);
+            }
+            else {
+                std::unique_lock<std::mutex> lock(readerMtx);
+                orders.push_back(orderLine);
+            }*/
         }
     }
     {
