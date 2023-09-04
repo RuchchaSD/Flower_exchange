@@ -31,82 +31,63 @@ int main() {
     OrderProcessor tulipOrderprocessor("Tulip", writer);
     OrderProcessor orchidOrderprocessor("Orchid", writer);
 
-
-    //instrument buffers
-    std::vector<std::vector<std::string>> roseOrders;
-    std::vector<std::vector<std::string>> lavenderOrders;
-    std::vector<std::vector<std::string>> lotusOrders;
-    std::vector<std::vector<std::string>> tulipOrders;
-    std::vector<std::vector<std::string>> orchidOrders;
-
-
-    //reader buffer
-    std::vector<std::vector<std::string>> newOrders;
-
+    int orderCount = 0;
+    int rejectedOrderCount = 0;
+    int roseOrderCount = 0;
+    int lavenderOrderCount = 0;
+    int lotusOrderCount = 0;
+    int tulipOrderCount = 0;
+    int orchidOrderCount = 0;
     //read orders one line at a time and pass it to the validator
     std::vector<std::string> orderLine;
 
     //read the first line of the CSV file
     while (reader.getNextOrderLine(orderLine)) {
-        newOrders.push_back(orderLine);
-
-        while (!newOrders.empty())
-        {
-            //validate the order
-            int status = validator.newValidator(newOrders.front());
-            newOrders.erase(newOrders.begin());
-
-            if (status == 0) {//order is rejected
-                //std::cout << orderLine[1] << ": Order is rejected" << std::endl;
-                continue;
-            }
-            else {
-                //order is accepted
-                if (status == 1) {
-                    roseOrders.push_back(orderLine);
-                }
-                else if (status == 2) {
-                    lavenderOrders.push_back(orderLine);
-                }
-                else if (status == 3) {
-                    lotusOrders.push_back(orderLine);
-                }
-                else if (status == 4) {
-                    tulipOrders.push_back(orderLine);
-                }
-                else if (status == 5) {
-                    orchidOrders.push_back(orderLine);
-                }
-
-                //process the orders
-                while (!roseOrders.empty()) {
-                    roseOrderprocessor.ProcessOrder(roseOrders.front());
-                    roseOrders.erase(roseOrders.begin());
-                }
-                while (!lavenderOrders.empty()) {
-                    lavenderOrderprocessor.ProcessOrder(lavenderOrders.front());
-                    lavenderOrders.erase(lavenderOrders.begin());
-                }
-                while (!lotusOrders.empty()) {
-                    lotusOrderprocessor.ProcessOrder(lotusOrders.front());
-                    lotusOrders.erase(lotusOrders.begin());
-                }
-                while (!tulipOrders.empty()) {
-                    tulipOrderprocessor.ProcessOrder(tulipOrders.front());
-                    tulipOrders.erase(tulipOrders.begin());
-                }
-                while (!orchidOrders.empty()) {
-                    orchidOrderprocessor.ProcessOrder(orchidOrders.front());
-                    orchidOrders.erase(orchidOrders.begin());
-                }
-            }
+        orderCount++;
+        int status = validator.newValidator(orderLine);
+        if (status == 0) {//order is rejected
+            rejectedOrderCount++;
+            continue;
+        }
+        else if (status == 1) {
+            roseOrderCount++;
+            roseOrderprocessor.ProcessOrder(orderLine);
+        }
+        else if (status == 2) {
+            lavenderOrderCount++;
+            lavenderOrderprocessor.ProcessOrder(orderLine);
+        }
+        else if (status == 3) {
+            lotusOrderCount++;
+            lotusOrderprocessor.ProcessOrder(orderLine);
+        }
+        else if (status == 4) {
+            tulipOrderCount++;
+            tulipOrderprocessor.ProcessOrder(orderLine);
+        }
+        else if (status == 5) {
+            orchidOrderCount++;
+            orchidOrderprocessor.ProcessOrder(orderLine);
         }
     }
+
+
+
+
 
     //add code to measure time at the end of the program
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end - start;
-    std::cout << "Time taken to process all orders: " << elapsed_seconds.count() << "s\n";
+
+    cout << "NonConcurrent Approach: \n";
+    cout << "Total number of orders: " << orderCount << "\n";
+    cout << "Total number of rejected orders: " << rejectedOrderCount << "\n";
+    cout << "Total number of Rose orders: " << roseOrderCount << "\n";
+    cout << "Total number of Lavender orders: " << lavenderOrderCount << "\n";
+    cout << "Total number of Lotus orders: " << lotusOrderCount << "\n";
+    cout << "Total number of Tulip orders: " << tulipOrderCount << "\n";
+    cout << "Total number of Orchid orders: " << orchidOrderCount << "\n";
+    std::cout << "Time taken to process "<<orderCount<<" orders: " << elapsed_seconds.count() << "s"<<endl;
 
 
     return 0;
