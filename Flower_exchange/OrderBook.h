@@ -1,3 +1,4 @@
+//book
 #pragma once
 #ifndef ORDER_BOOK_H
 #define ORDER_BOOK_H
@@ -64,7 +65,7 @@ public:
 
 
     //SELL
-    bool isSellEmpty(); 
+    bool isSellEmpty();
     double getSellMinVal();
     std::vector<std::string> getSellMinVec();
     void popSellMinVec();

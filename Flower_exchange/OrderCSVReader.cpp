@@ -1,11 +1,9 @@
+//reader
 #include "OrderCSVReader.h"
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 using namespace std;
 
-OrderCSVReader::OrderCSVReader(const std::string& filename, int orderId ) : filename(filename) {
+OrderCSVReader::OrderCSVReader(const std::string& filename, int orderId) : filename(filename) {
     this->orderId = orderId;
     file.open(filename);
     if (!file.is_open()) {
@@ -46,4 +44,22 @@ void OrderCSVReader::changeFilename(const std::string& newFilename) {
     file.close();
     filename = newFilename;
     file.open(filename);
+}
+
+void OrderCSVReader::getAllOrders(std::vector<std::vector<std::string>>& orders, std::mutex& readerMtx, bool& doneReading, std::condition_variable& cvReader) {
+    std::vector<std::string> orderLine;
+    while (getNextOrderLine(orderLine)) {
+        {
+
+            std::unique_lock<std::mutex> lock(readerMtx);
+            orders.push_back(orderLine);
+            cvReader.notify_one();
+        }
+    }
+    {
+        std::lock_guard<std::mutex> lock(readerMtx);
+        doneReading = true;
+        cvReader.notify_one();
+        //cout << "Done reading orders" << endl;
+    }
 }
