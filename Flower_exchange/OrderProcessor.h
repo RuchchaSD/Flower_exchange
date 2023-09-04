@@ -15,6 +15,7 @@ class OrderProcessor {
 private:
     // Add private variables
     ExecutionReportCSVWriter& writer;
+    int nExecuted;
 
     OrderBook orderBook;
     //std::vector<std::string> rejectedOrderIDs; 

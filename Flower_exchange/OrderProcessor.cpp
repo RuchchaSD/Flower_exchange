@@ -158,7 +158,7 @@ void OrderProcessor::ProcessAllOrders(
 			}
 		}
 	}
-	std::cout << "Order Processor " << this->Instrument << " OrderCount : " << orderCount << std::endl;
+	std::cout << "Order Processor " << this->Instrument << " OrderCount : " << orderCount<< " Execution Reports Written : "<< nExecuted << std::endl;
 	{
 		std::unique_lock<std::mutex> lock6(writerMtx);
 		doneWriting++;
@@ -301,6 +301,7 @@ void OrderProcessor::recordOrder(const std::vector<std::string>& order, int stat
 	{
 		std::unique_lock<std::mutex> lock(writerMtx);
 		writerBuffer += orderLine;
+		nExecuted++;
 		//cvWriter.notify_one();
 		//writerBuffer.push_back(orderDetails);
 	}

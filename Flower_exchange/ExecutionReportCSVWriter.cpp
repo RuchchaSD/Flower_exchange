@@ -105,7 +105,7 @@ void ExecutionReportCSVWriter::writeAllRecords(std::string& writerBuffer, std::m
             writeExecutionRecord(lines);
         }
     }
-    std::cout << "Finished writing" << std::endl;
+    //std::cout << "Writer            || Finished writing" << std::endl;
 }
 
 void ExecutionReportCSVWriter::writeExecutionRecord(std::string record)

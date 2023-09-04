@@ -234,7 +234,7 @@ void OrderValidator::validateAllorders(
 
 
     }
-    //std::cout << "Order Validator || CountOut : " << countOut << " Count : " << count << " OrderCount : " << orderCount << std::endl; 
+    std::cout << "Order Validator|| OrderCount : " << orderCount<< " Rejected Order count : "<< nRejected<< "\n" << std::endl;
     {
         std::unique_lock<std::mutex>
             lock1(roseMtx),
@@ -306,7 +306,8 @@ int OrderValidator::threadValidator(const std::vector<std::string>& order, std::
 }
 
 std::string OrderValidator::getRejectedOrderLine(const std::vector<std::string>& order, const std::string& reason)
-{
+{   
+    nRejected++;
     std::string line = "";
     if (order.size() == 6) {
         line = order[0] + "," + order[1] + "," + order[2] + "," + order[3] + "," + order[4] + "," + order[5] + ",1," + reason + "," + getDateTime() + "\n";

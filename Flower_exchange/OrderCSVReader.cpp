@@ -60,6 +60,6 @@ void OrderCSVReader::getAllOrders(std::vector<std::vector<std::string>>& orders,
         std::lock_guard<std::mutex> lock(readerMtx);
         doneReading = true;
         cvReader.notify_one();
-        //cout << "Done reading orders" << endl;
+        //cout << "Reader           || Finished reading orders" << endl;
     }
 }

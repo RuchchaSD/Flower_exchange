@@ -16,6 +16,7 @@ class OrderValidator {
 private:
     ExecutionReportCSVWriter& writer;
     std::vector<std::string> rejectedOrderIDs;
+    int nRejected;
     //std::vector<std::string> rejectedOrders = {"er00"};
 
     void incrementrejectedOrders(std::string& orderID);
