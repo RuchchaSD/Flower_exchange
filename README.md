@@ -31,8 +31,17 @@ The project is structured as follows:
 
 ## Branches
 
-- The non-concurrent approach can be found in the '2.nonconcurrent' branch of this repository.
-- The concurrent approach can be found in the '4.concurrent_2' branch of this repository.
+- The non-concurrent approach can be found in the '2.nonconcurrent' branch of this repository
+    - Average time taken for execution is 4.05783s
+<p align="center">
+  <img src="https://github.com/RuchchaSD/Flower_exchange/assets/129428203/46775df9-5851-4e43-9c5e-0d340882f826.png" width="400" height="150">
+</p>
+
+- The concurrent approach can be found in the 'master' branch of this repository.
+    - Average time taken for execution is 0.506107s
+<p align="center">
+  <img src="https://github.com/RuchchaSD/Flower_exchange/assets/129428203/10c231d0-ae5c-4551-a526-296b95bc03f4.png" width="600" height="150">
+</p>      
 
 Feel free to explore and use the branch that best suits your needs.
 
