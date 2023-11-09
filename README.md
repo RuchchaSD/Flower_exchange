@@ -1,5 +1,7 @@
 # Flower Exchange - C++ Trading System
 
+### Our implementation was awarded the best implementation - high-throughput programming 
+
 ## Overview
 
 This repository is a part of the C++ Workshop Series conducted by LSEG (London Stock Exchange Group). It involves the implementation of a C++ program for a Flower Exchange system that supports basic trading operations. The system comprises two main components:
